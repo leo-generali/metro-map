@@ -35,7 +35,8 @@ function initializeMap() {
 
       var options = {
          'zoom': 12,
-         'center': center
+         'center': center,
+         'mapTypeControl': false
       };
 
       var map = new google.maps.Map(document.getElementById('map'), options);
@@ -43,16 +44,34 @@ function initializeMap() {
       //Station Information
       //var i = 0;
 
-
-
+      //Table that return the long form of 
+      var lineHashTable = {
+         RD: 'Red',
+         BL: 'Blue',
+         OR: 'Orange',
+         SV: 'Silver',
+         YL: 'Yellow',
+         GR: 'Green'
+      };
 
       //Populates the metro map with every station
    	function populateMap(num){
          for(var i = 0; i < num; i++){
             (function(current){
 
+               // function returnLines(){
+               //    var tempLines = '';
+               //    if(model.Stations[current].LineCode1 !== null){
+               //       console.log(lineHashTable[model.Stations[current].LineCode1]);
+               //    }else if(model.Stations[current].LineCode2 !== null){
+               //       console.log('line2');
+               //    }
+               // };
+
+               // returnLines();
+
                //Creates text with information on the Stations name and lines that go through it
-               var contentString = '<b>Station: </b>' + model.Stations[current].Name + '<br>' + '<b>Line: </b>' + model.Stations[current].LineCode1;
+               var contentString = '<b>Station: </b>' + model.Stations[current].Name + '<br>' + '<b>Lines: </b>' + model.Stations[current].LineCode1;
 
                var infowindow = new google.maps.InfoWindow({
                   content: contentString
@@ -60,13 +79,17 @@ function initializeMap() {
 
                console.log(model.Stations[current].Name);
 
-
                //Places marker on map
                var latLng = new google.maps.LatLng(model.Stations[current].Lat, model.Stations[current].Lon);
                var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
+                  line1: model.Stations[current].LineCode1,
+                  line2: model.Stations[current].LineCode2,
+                  line3: model.Stations[current].LineCode3,
+                  line4: model.Stations[current].LineCode4,
                   title: model.Stations[current].Name
+
                });
 
                //Opens infowindow containing contentString when the marker is clicked
@@ -74,10 +97,24 @@ function initializeMap() {
                   infowindow.open(map, marker);
                });
 
+               marker.addListener('click', function(){
+                  this.setAnimation(google.maps.Animation.BOUNCE);
+                  setTimeout(function(){
+                     marker.setAnimation(null);
+                  }, 728);
+               });
+
                markers.push(marker);
 
             })(i)
          }
    	}
-   	populateMap(model.Stations.length);
+   populateMap(model.Stations.length);
+}
+
+function mapViewModel(){
+
+
+
+   ko.applyBindings(new mapViewModel());
 }
