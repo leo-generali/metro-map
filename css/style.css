@@ -18,3 +18,23 @@ h1, h2, h3, h4, h5, h6, body, html, p{
 	margin: 0;
 	padding: 0;
 }
+
+.stationName{
+	font-weight: bold;
+}
+
+.stationLine{
+	font-size: 0.9em;
+	font-weight: 200;
+	color: white;
+	padding: 1px 3px;
+	border-radius: 3px;
+}
+
+.stationLine.red{
+	background-color: red;
+}
+
+.stationLine .yellow{
+	background-color: yellow;
+}

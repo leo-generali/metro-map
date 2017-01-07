@@ -46,12 +46,13 @@ function initializeMap() {
 
       //Table that return the long form of 
       var lineHashTable = {
-         RD: 'Red',
-         BL: 'Blue',
-         OR: 'Orange',
-         SV: 'Silver',
-         YL: 'Yellow',
-         GR: 'Green'
+         RD: 'red',
+         BL: 'blue',
+         OR: 'orange',
+         SV: 'silver',
+         YL: 'yellow',
+         GR: 'green',
+         null: ''
       };
 
       //Populates the metro map with every station
@@ -70,8 +71,18 @@ function initializeMap() {
 
                // returnLines();
 
+               //Helper function that creates colored metro line information
+               console.log(lineHashTable[model.Stations[current].LineCode1]);
+
+
                //Creates text with information on the Stations name and lines that go through it
-               var contentString = '<b>Station: </b>' + model.Stations[current].Name + '<br>' + '<b>Lines: </b>' + model.Stations[current].LineCode1;
+               var contentString = '<div id="content">' + 
+               '<p class="stationName">' + model.Stations[current].Name + '</p>' +
+               '<p class="stationLine red">' + 
+               model.Stations[current].LineCode1 + ' ' + 
+               model.Stations[current].LineCode2 + ' ' +
+               model.Stations[current].LineCode3 + ' ' +
+               model.Stations[current].LineCode4;
 
                var infowindow = new google.maps.InfoWindow({
                   content: contentString
