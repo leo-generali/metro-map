@@ -120,8 +120,10 @@ function initializeMap() {
 
             })(i)
          }
-   	}
+      }
    populateMap(model.Stations.length);
+
+   //Applies KO bindings after marker is populated
    ko.applyBindings(new mapViewModel());
 }
 
@@ -129,5 +131,16 @@ function mapViewModel(){
    var self = this;
 
    self.mapMarkers = ko.observableArray(markers);
+   self.userInput = ko.observable('');
+
+   //Will contain markers that should be visible based on user input
+   self.visibleMarkers = ko.observableArray();
+
+   //Filters the map based on string in user input
+   self.searchMarkers = function(){
+      //var searchInput = self.userInput().toLowerCase();
+
+   };
+
    console.log(self.mapMarkers().length);
 }

@@ -14,17 +14,24 @@ CSS Files Related to the Search Bar in the Upper Left
 	left: 5px;
 
 	width: 240px;
+	padding: 10px;
 
-	background-color: white;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+#mapTitle{
+	text-align: center;
 }
 
 #metroInput{
-	width: 90%;
+	width: 99%;
 }
 
 #markerList{
 	height: 200px;
-	padding-left: 10px;
+	padding-left: 0px;
+	margin: 3px;
+
 	overflow: auto;
 
 	list-style-type: none;
