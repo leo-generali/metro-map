@@ -2,14 +2,32 @@
 	height: 100%;
 }
 
-#menu{
+/*
 
-}
+CSS Files Related to the Search Bar in the Upper Left
 
-#metroInput{
+*/
+
+#mapMenu{
 	position: absolute;
 	top: 5px;
 	left: 5px;
+
+	width: 240px;
+
+	background-color: white;
+}
+
+#metroInput{
+	width: 90%;
+}
+
+#markerList{
+	height: 200px;
+	padding-left: 10px;
+	overflow: auto;
+
+	list-style-type: none;
 }
 
 h1, h2, h3, h4, h5, h6, body, html, p{
@@ -18,6 +36,13 @@ h1, h2, h3, h4, h5, h6, body, html, p{
 	margin: 0;
 	padding: 0;
 }
+
+/*
+
+CSS Files Related to the markers
+
+*/
+
 
 .stationName{
 	font-weight: bold;

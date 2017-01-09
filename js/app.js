@@ -26,6 +26,7 @@
 //Set up the Map
 
 var markers = [];
+//var markers = [];
 
 function initializeMap() {
       //Creates the map of the DMV
@@ -121,11 +122,12 @@ function initializeMap() {
          }
    	}
    populateMap(model.Stations.length);
+   ko.applyBindings(new mapViewModel());
 }
 
 function mapViewModel(){
+   var self = this;
 
-
-
-   ko.applyBindings(new mapViewModel());
+   self.mapMarkers = ko.observableArray(markers);
+   console.log(self.mapMarkers().length);
 }
