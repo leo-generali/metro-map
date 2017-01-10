@@ -26,7 +26,6 @@
 //Set up the Map
 
 var markers = [];
-//var markers = [];
 
 function initializeMap() {
       //Creates the map of the DMV
@@ -102,7 +101,6 @@ function initializeMap() {
                   line3: model.Stations[current].LineCode3,
                   line4: model.Stations[current].LineCode4,
                   title: model.Stations[current].Name
-
                });
 
                //Opens infowindow containing contentString when the marker is clicked
@@ -137,5 +135,7 @@ function mapViewModel(){
    //Will contain markers that should be visible based on user input
    self.visibleMarkers = ko.observableArray();
 
-   console.log(self.mapMarkers().length);
+   self.search = function(){
+      console.log(self.userInput());
+   }
 }
