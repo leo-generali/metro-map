@@ -127,15 +127,18 @@ function initializeMap() {
 }
 
 function mapViewModel(){
-   var self = this;
+   // var self = this;
 
-   self.mapMarkers = ko.observableArray(markers);
-   self.userInput = ko.observable('');
+   this.mapMarkers = ko.observableArray(markers);
+   this.userInput = ko.observable('');
 
    //Will contain markers that should be visible based on user input
-   self.visibleMarkers = ko.observableArray();
+   this.visibleMarkers = ko.observableArray();
 
-   self.search = function(){
-      console.log(self.userInput());
+   this.search = function(){
+      console.log(this.mapMarkers()[this.userInput()].title);
+      if(this.mapMarkers()[this.userInput()].title === 'Metro Center'){
+         this.mapMarkers().removeAll();
+      }
    }
 }
