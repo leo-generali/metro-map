@@ -85,6 +85,7 @@ function initializeMap() {
                model.Stations[current].LineCode3 + ' ' +
                model.Stations[current].LineCode4;
 
+               //Gives each station an infowindow that displays the information above
                var infowindow = new google.maps.InfoWindow({
                   content: contentString
                });
@@ -118,12 +119,12 @@ function initializeMap() {
 
                markers.push(marker);
 
-            })(i)
+            })(i);
          }
       }
    populateMap(model.Stations.length);
 
-   //Applies KO bindings after marker is populated
+   //Applies KO bindings after markers is populated
    ko.applyBindings(new mapViewModel());
 }
 
@@ -135,12 +136,6 @@ function mapViewModel(){
 
    //Will contain markers that should be visible based on user input
    self.visibleMarkers = ko.observableArray();
-
-   //Filters the map based on string in user input
-   self.searchMarkers = function(){
-      //var searchInput = self.userInput().toLowerCase();
-
-   };
 
    console.log(self.mapMarkers().length);
 }
