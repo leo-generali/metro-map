@@ -7,4 +7,4 @@ This project is still actively being working on. A live version has not yet been
 
 ###Built With
 Knockout.js
-WMATA API
+WMATA API+ 
