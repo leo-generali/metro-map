@@ -24,8 +24,8 @@
 // trainStationRequest.send();
 
 //Set up the Map
-
 var markers = [];
+var test = [];
 
 function initializeMap() {
       //Creates the map of the DMV
@@ -120,25 +120,26 @@ function initializeMap() {
             })(i);
          }
       }
+
    populateMap(model.Stations.length);
 
    //Applies KO bindings after markers is populated
    ko.applyBindings(new mapViewModel());
 }
 
+
 function mapViewModel(){
    var self = this;
 
-   self.mapMarkers = ko.observableArray(markers);
+   self.filteredMapMarkers = ko.observableArray([]);
    self.userInput = ko.observable('');
-
-   //Will contain markers that should be visible based on user input
-   self.visibleMarkers = ko.observableArray();
-
-   self.search = function(){
-      console.log(self.mapMarkers()[self.userInput()].title);
-      if(self.mapMarkers()[self.userInput()].title === 'Metro Center'){
-         self.mapMarkers().removeAll();
+   self.mapMarkers = ko.observableArray(markers);
+      
+   self.filterLocations = function(){
+      var filter = self.userInput().toLowerCase();
+      if(filter){
+         console.log(filter);
+         self.filteredMapMarkers().push(filter);
       }
    };
 }

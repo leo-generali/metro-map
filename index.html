@@ -21,8 +21,8 @@
 	<div id = "map"></div>
 	<div id = "mapMenu">
 		<h1 id = "mapTitle">DMV Metro Map</h1>	
-		<input id = "metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput, event: {keyup: search}" />
-		<ul id = "markerList" data-bind="foreach: mapMarkers">
+		<input id = "metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput, event: {keyup: filterLocations}" />
+		<ul id = "markerList" data-bind="foreach: filteredMapMarkers">
 			<li><span data-bind="text: title"></span></li>
 		</ul>
 	</div>
