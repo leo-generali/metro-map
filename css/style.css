@@ -67,6 +67,6 @@ CSS Files Related to the markers
 	background-color: red;
 }
 
-.stationLine .yellow{
+.stationLine.yellow{
 	background-color: yellow;
 }

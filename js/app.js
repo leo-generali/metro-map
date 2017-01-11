@@ -35,36 +35,14 @@ function initializeMap() {
          for(var i = 0; i < num; i++){
             (function(current){
 
-               // function returnLines(){
-               //    var tempLines = '';
-               //    if(model.Stations[current].LineCode1 !== null){
-               //       console.log(lineHashTable[model.Stations[current].LineCode1]);
-               //    }else if(model.Stations[current].LineCode2 !== null){
-               //       console.log('line2');
-               //    }
-               // };
-
-               // returnLines();
-
-               //Helper function that creates colored metro line information
-               console.log(lineHashTable[model.Stations[current].LineCode1]);
-
-
                //Creates text with information on the Stations name and lines that go through it
                var contentString = '<div id="content">' + 
-               '<p class="stationName">' + model.Stations[current].Name + '</p>' +
-               '<p class="stationLine red">' + 
-               model.Stations[current].LineCode1 + ' ' + 
-               model.Stations[current].LineCode2 + ' ' +
-               model.Stations[current].LineCode3 + ' ' +
-               model.Stations[current].LineCode4;
+               '<p class="stationName">' + model.Stations[current].Name + '</p>';
 
                //Gives each station an infowindow that displays the information above
                var infowindow = new google.maps.InfoWindow({
                   content: contentString
                });
-
-               console.log(model.Stations[current].Name);
 
                //Places marker on map
                var latLng = new google.maps.LatLng(model.Stations[current].Lat, model.Stations[current].Lon);
@@ -104,17 +82,28 @@ function initializeMap() {
 
 
 function mapViewModel(){
-   var self = this;
 
-   self.filteredMapMarkers = ko.observableArray([]);
-   self.userInput = ko.observable('');
-   self.mapMarkers = ko.observableArray(markers);
-      
-   self.filterLocations = function(){
-      var filter = self.userInput().toLowerCase();
-      if(filter){
-         console.log(filter);
-         self.filteredMapMarkers().push(filter);
-      }
-   };
+  var self = this;
+
+  self.filteredMapMarkers = ko.observableArray([]);
+  self.userInput = ko.observable('');
+  self.mapMarkers = ko.observableArray(markers);
+  
+  self.filterLocations = ko.computed(function(){
+   var filter = self.userInput().toLowerCase();
+
+   self.filteredMapMarkers.removeAll();
+
+   self.mapMarkers().forEach(function(metroStation){
+   metroStation.setVisible(false);
+
+      if(metroStation.title.toLowerCase().indexOf(filter) !== -1){
+         //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
+         //Once a character is typed, this function looks at all stations and finds out that character is located in it.
+         //If that character is inside the function, it is added to filterMapMarker
+         metroStation.setVisible(true);
+         self.filteredMapMarkers.push(metroStation)
+      }  
+   });
+  });
 }
