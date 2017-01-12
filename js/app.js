@@ -98,14 +98,14 @@ function mapViewModel(){
    self.userInput = ko.observable('');
    self.mapMarkers = ko.observableArray(markers);
 
+   //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
+   //Once a character is typed, this function looks at all stations and finds out that character is located in it.
+   //If that character is inside the function, it is added to filterMapMarker
    self.filterLocations = ko.computed(function(){
    var filter = self.userInput().toLowerCase();
 
    self.filteredMapMarkers.removeAll();
 
-   //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
-   //Once a character is typed, this function looks at all stations and finds out that character is located in it.
-   //If that character is inside the function, it is added to filterMapMarker
    self.mapMarkers().forEach(function(metroStation){
    metroStation.setVisible(false);
 

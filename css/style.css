@@ -37,6 +37,15 @@ CSS Files Related to the Search Bar in the Upper Left
 	list-style-type: none;
 }
 
+.metroName{
+	padding: 2px 0;
+}
+
+.metroName:hover{
+	cursor: pointer; 
+	cursor: hand;
+}
+
 h1, h2, h3, h4, h5, h6, body, html, p{
 	font-family: Arial, sans-serif;
 	height: 100%;
@@ -65,12 +74,12 @@ Station Colors
 
 */
 
-.RD	{background-color: red;}
+.RD	{background-color: red; color: white;}
 .YL	{background-color: yellow;}
-.GR	{background-color: green;}
+.GR	{background-color: green; color: white;}
 .SL	{background-color: silver;}
-.OR	{background-color: orange;}
-.BL	{background-color: blue;}
+.OR	{background-color: orange; color: white;}
+.BL	{background-color: blue; color: white;}
 .null {display: none;}
 
 
