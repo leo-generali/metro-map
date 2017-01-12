@@ -57,16 +57,20 @@ CSS Files Related to the markers
 
 .stationLine{
 	font-size: 0.9em;
-	font-weight: 200;
-	color: white;
-	padding: 1px 3px;
-	border-radius: 3px;
 }
 
-.stationLine.red{
-	background-color: red;
-}
+/*
 
-.stationLine.yellow{
-	background-color: yellow;
-}
+Station Colors
+
+*/
+
+.RD	{background-color: red;}
+.YL	{background-color: yellow;}
+.GR	{background-color: green;}
+.SL	{background-color: silver;}
+.OR	{background-color: orange;}
+.BL	{background-color: blue;}
+.null {display: none;}
+
+

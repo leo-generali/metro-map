@@ -6,9 +6,9 @@ var model = {
          "StationTogether1":"C01",
          "StationTogether2":"",
          "LineCode1":"RD",
-         "LineCode2":null,
-         "LineCode3":null,
-         "LineCode4":null,
+         "LineCode2":"BL",
+         "LineCode3":"OR",
+         "LineCode4":"SV",
          "Lat":38.898303,
          "Lon":-77.028099,
          "Address":{
@@ -484,24 +484,6 @@ var model = {
             "City":"Washington",
             "State":"DC",
             "Zip":"20002"
-         }
-      },
-      {
-         "Code":"C01",
-         "Name":"Metro Center",
-         "StationTogether1":"A01",
-         "StationTogether2":"",
-         "LineCode1":"BL",
-         "LineCode2":"OR",
-         "LineCode3":"SV",
-         "LineCode4":null,
-         "Lat":38.898303,
-         "Lon":-77.028099,
-         "Address":{
-            "Street":"607 13th St. NW",
-            "City":"Washington",
-            "State":"DC",
-            "Zip":"20005"
          }
       },
       {

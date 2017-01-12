@@ -27,22 +27,13 @@ function initializeMap() {
          SV: 'silver',
          YL: 'yellow',
          GR: 'green',
-         null: ''
+         null: 'null'
       };
 
       //Populates the metro map with every station
       function populateMap(num){
          for(var i = 0; i < num; i++){
             (function(current){
-
-               //Creates text with information on the Stations name and lines that go through it
-               var contentString = '<div id="content">' + 
-               '<p class="stationName">' + model.Stations[current].Name + '</p>';
-
-               //Gives each station an infowindow that displays the information above
-               var infowindow = new google.maps.InfoWindow({
-                  content: contentString
-               });
 
                //Places marker on map
                var latLng = new google.maps.LatLng(model.Stations[current].Lat, model.Stations[current].Lon);
@@ -54,6 +45,24 @@ function initializeMap() {
                   line3: model.Stations[current].LineCode3,
                   line4: model.Stations[current].LineCode4,
                   title: model.Stations[current].Name
+               });
+
+               
+               var testStr = model.Stations[current].LineCode1;
+               console.log(testStr);
+
+               //Creates text with information on the Stations name and lines that go through it
+               var contentString = '<div id="content">' + 
+               '<p class="stationName">' + marker.title + '</p>' + 
+               '<p class="stationLine ' + model.Stations[current].LineCode1 + '">' + marker.line1; + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode2 + '">' + marker.line2; + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode3 + '">' + marker.line3; + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode4 + '">' + marker.line4; 
+
+
+               //Gives each station an infowindow that displays the information above
+               var infowindow = new google.maps.InfoWindow({
+                  content: contentString
                });
 
                //Opens infowindow containing contentString when the marker is clicked
@@ -85,22 +94,22 @@ function mapViewModel(){
 
   var self = this;
 
-  self.filteredMapMarkers = ko.observableArray([]);
-  self.userInput = ko.observable('');
-  self.mapMarkers = ko.observableArray(markers);
-  
-  self.filterLocations = ko.computed(function(){
+   self.filteredMapMarkers = ko.observableArray([]);
+   self.userInput = ko.observable('');
+   self.mapMarkers = ko.observableArray(markers);
+
+   self.filterLocations = ko.computed(function(){
    var filter = self.userInput().toLowerCase();
 
    self.filteredMapMarkers.removeAll();
 
+   //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
+   //Once a character is typed, this function looks at all stations and finds out that character is located in it.
+   //If that character is inside the function, it is added to filterMapMarker
    self.mapMarkers().forEach(function(metroStation){
    metroStation.setVisible(false);
 
       if(metroStation.title.toLowerCase().indexOf(filter) !== -1){
-         //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
-         //Once a character is typed, this function looks at all stations and finds out that character is located in it.
-         //If that character is inside the function, it is added to filterMapMarker
          metroStation.setVisible(true);
          self.filteredMapMarkers.push(metroStation)
       }  
