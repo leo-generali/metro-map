@@ -10,8 +10,8 @@ CSS Files Related to the Search Bar in the Upper Left
 
 #mapMenu{
 	position: absolute;
-  top: 0px;
-  width: 100%;
+  	top: 0px;
+ 	width: 100%;
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -25,7 +25,7 @@ CSS Files Related to the Search Bar in the Upper Left
 }
 
 #markerList{
-	height: 200px;
+	height: 100px;
 	padding-left: 0px;
 	margin: 3px;
 
@@ -93,5 +93,9 @@ Station Colors
 
 		width: 240px;
 		padding: 10px;
+	}
+
+	#markerList{
+		height: 200px;
 	}
 }
