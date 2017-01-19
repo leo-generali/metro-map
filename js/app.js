@@ -61,13 +61,13 @@ function initializeMap() {
 
 
                //Gives each station an infowindow that displays the information above
-               var infowindow = new google.maps.InfoWindow({
+               marker.infowindow = new google.maps.InfoWindow({
                   content: contentString
                });
 
                //Opens infowindow containing contentString when the marker is clicked
                marker.addListener('click', function(){
-                  infowindow.open(map, marker);
+                  marker.infowindow.open(map, marker);
                });
 
                marker.addListener('click', function(){
@@ -99,7 +99,7 @@ function mapViewModel(){
    self.mapMarkers = ko.observableArray(markers);
 
    self.listClick = function(){
-      console.log(this.title);
+      this.infowindow.open(this.map, this);
    }
 
    //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
