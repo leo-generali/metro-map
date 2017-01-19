@@ -49,7 +49,6 @@ function initializeMap() {
 
                
                var testStr = model.Stations[current].LineCode1;
-               console.log(testStr);
 
                //Creates text with information on the Stations name and lines that go through it
                var contentString = '<div id="content">' + 
@@ -92,27 +91,32 @@ function initializeMap() {
 
 function mapViewModel(){
 
-  var self = this;
+   var self = this;
 
    self.filteredMapMarkers = ko.observableArray([]);
    self.userInput = ko.observable('');
    self.mapMarkers = ko.observableArray(markers);
 
+   self.listClick = function(){
+      console.log(this.infoWindow);
+   }
+
    //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
    //Once a character is typed, this function looks at all stations and finds out that character is located in it.
    //If that character is inside the function, it is added to filterMapMarker
+
    self.filterLocations = ko.computed(function(){
-   var filter = self.userInput().toLowerCase();
+      var filter = self.userInput().toLowerCase();
 
-   self.filteredMapMarkers.removeAll();
+     self.filteredMapMarkers.removeAll();
 
-   self.mapMarkers().forEach(function(metroStation){
-   metroStation.setVisible(false);
-
-      if(metroStation.title.toLowerCase().indexOf(filter) !== -1){
-         metroStation.setVisible(true);
-         self.filteredMapMarkers.push(metroStation)
-      }  
+      self.mapMarkers().forEach(function(metroStation){
+         metroStation.setVisible(false);
+         if(metroStation.title.toLowerCase().indexOf(filter) !== -1){
+            metroStation.setVisible(true);
+            self.filteredMapMarkers.push(metroStation)
+         }  
+      });
    });
-  });
+
 }

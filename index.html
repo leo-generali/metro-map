@@ -18,12 +18,14 @@
 
 <body>
 
-	<div id = "map"></div>
+	<div id = "map">
+		<p>There was an error loading Google maps! Try again!</p>
+	</div>
 	<div id = "mapMenu">
 		<h1 id = "mapTitle">DMV Metro Map</h1>	
 		<input id = "metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput" />
 		<ul id = "markerList" data-bind="foreach: filteredMapMarkers">
-			<li class="metroName"><span data-bind="text: title"></span></li>
+			<li class="metroName"><span data-bind="text: title, click: $root.listClick"></span></li>
 		</ul>
 	</div>
 
