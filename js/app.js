@@ -36,6 +36,7 @@ function initializeMap() {
             (function(current){
 
                //Places marker on map
+
                var latLng = new google.maps.LatLng(model.Stations[current].Lat, model.Stations[current].Lon);
                var marker = new google.maps.Marker({
                   position: latLng,
@@ -98,7 +99,7 @@ function mapViewModel(){
    self.mapMarkers = ko.observableArray(markers);
 
    self.listClick = function(){
-      console.log(this.infoWindow);
+      console.log(this.title);
    }
 
    //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker

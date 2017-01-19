@@ -25,7 +25,7 @@
 		<h1 id = "mapTitle">DMV Metro Map</h1>	
 		<input id = "metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput" />
 		<ul id = "markerList" data-bind="foreach: filteredMapMarkers">
-			<li class="metroName"><span data-bind="text: title, click: $root.listClick"></span></li>
+			<li class="metroName" data-bind="click: $root.listClick"><span data-bind="text: title"></span></li>
 		</ul>
 	</div>
 
