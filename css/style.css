@@ -61,10 +61,11 @@ CSS Files Related to the markers
 
 .stationName{
 	font-weight: bold;
+	margin-bottom: 2px;
 }
 
 .stationLine{
-	font-size: 0.9em;
+	font-size: 1em;
 }
 
 /*
@@ -73,10 +74,23 @@ Station Colors
 
 */
 
+#content{
+	display: flex;
+	flex-wrap: wrap;  
+}
+
+.stationLine{
+	width: 30px;
+	text-align: center;
+	padding: 2px;
+	border-radius: 5px;
+	margin-right: 2px;
+}
+
 .RD	{background-color: red; color: white;}
 .YL	{background-color: yellow;}
 .GR	{background-color: green; color: white;}
-.SL	{background-color: silver;}
+.SV	{background-color: silver;}
 .OR	{background-color: orange; color: white;}
 .BL	{background-color: blue; color: white;}
 .null {display: none;}

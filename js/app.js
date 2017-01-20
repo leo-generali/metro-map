@@ -21,12 +21,12 @@ function initializeMap() {
 
       //Table that return the long form of 
       var lineHashTable = {
-         RD: 'red',
-         BL: 'blue',
-         OR: 'orange',
-         SV: 'silver',
-         YL: 'yellow',
-         GR: 'green',
+         'RD': 'Red',
+         'BL': 'Blue',
+         'OR': 'Orange',
+         'SV': 'Silver',
+         'YL': 'Yellow',
+         'GR': 'Green',
          null: 'null'
       };
 
@@ -37,16 +37,13 @@ function initializeMap() {
             (function(current){
 
                //Places marker on map
-
                var latLng = new google.maps.LatLng(model.Stations[current].Lat, model.Stations[current].Lon);
                var marker = new google.maps.Marker({
                   position: latLng,
                   map: map,
-                  line1: model.Stations[current].LineCode1,
-                  line2: model.Stations[current].LineCode2,
-                  line3: model.Stations[current].LineCode3,
-                  line4: model.Stations[current].LineCode4,
+                  lines: [model.Stations[current].LineCode1, model.Stations[current].LineCode2, model.Stations[current].LineCode3, model.Stations[current].LineCode4],
                   title: model.Stations[current].Name,
+                  stationCode: model.Stations[current].Code,
                   openInfoWindow: false
                });
 
@@ -54,17 +51,17 @@ function initializeMap() {
                var testStr = model.Stations[current].LineCode1;
 
                //Creates text with information on the Stations name and lines that go through it
-               var contentString = '<div id="content">' + 
-               '<p class="stationName">' + marker.title + '</p>' + 
-               '<p class="stationLine ' + model.Stations[current].LineCode1 + '">' + marker.line1; + '</p>' +
-               '<p class="stationLine ' + model.Stations[current].LineCode2 + '">' + marker.line2; + '</p>' +
-               '<p class="stationLine ' + model.Stations[current].LineCode3 + '">' + marker.line3; + '</p>' +
-               '<p class="stationLine ' + model.Stations[current].LineCode4 + '">' + marker.line4; 
-
+               var contentString = 
+               '<p class="stationName">' + marker.title + '</p>' + '<div id="content">' + 
+               '<p class="stationLine ' + model.Stations[current].LineCode1 + '">' + marker.lines[0] + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode2 + '">' + marker.lines[1] + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode3 + '">' + marker.lines[2] + '</p>' +
+               '<p class="stationLine ' + model.Stations[current].LineCode4 + '">' + marker.lines[3] 
 
                //Gives each station an infowindow that displays the information above
                marker.infowindow = new google.maps.InfoWindow({
-                  content: contentString
+                  content: contentString,
+                  maxWidth: 150
                });
 
                //If that marker's infoWindow is NOT open, it will open.
