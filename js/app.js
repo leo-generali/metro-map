@@ -30,6 +30,7 @@ function initializeMap() {
          null: 'null'
       };
 
+
       //Populates the metro map with every station
       function populateMap(num){
          for(var i = 0; i < num; i++){
@@ -45,7 +46,8 @@ function initializeMap() {
                   line2: model.Stations[current].LineCode2,
                   line3: model.Stations[current].LineCode3,
                   line4: model.Stations[current].LineCode4,
-                  title: model.Stations[current].Name
+                  title: model.Stations[current].Name,
+                  openInfoWindow: false
                });
 
                
@@ -65,17 +67,23 @@ function initializeMap() {
                   content: contentString
                });
 
-               //Opens infowindow containing contentString when the marker is clicked
-               marker.addListener('click', function(){
-                  marker.infowindow.open(map, marker);
-               });
+               //If that marker's infoWindow is NOT open, it will open.
+               //If the marker's infoWindow IS open, it will close.
+               marker.infoWindowClick = function(){
+                  markers.forEach(function(markerElem){
+                     markerElem.infowindow.close();
+                     this.openInfoWindow = false;
+                  });
+                  if(!this.openInfoWindow){
+                     this.infowindow.open(this.map, this);
+                     this.openInfoWindow = true;
+                  }else{
+                     this.infowindow.close();
+                     this.openInfoWindow = false;
+                  }
+               };
 
-               marker.addListener('click', function(){
-                  this.setAnimation(google.maps.Animation.BOUNCE);
-                  setTimeout(function(){
-                     marker.setAnimation(null);
-                  }, 728);
-               });
+               marker.addListener('click', marker.infoWindowClick);
 
                markers.push(marker);
 
@@ -98,9 +106,10 @@ function mapViewModel(){
    self.userInput = ko.observable('');
    self.mapMarkers = ko.observableArray(markers);
 
+   //Click view infoWindow open
    self.listClick = function(){
-      this.infowindow.open(this.map, this);
-   }
+      this.infoWindowClick();
+   };
 
    //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
    //Once a character is typed, this function looks at all stations and finds out that character is located in it.
@@ -115,9 +124,8 @@ function mapViewModel(){
          metroStation.setVisible(false);
          if(metroStation.title.toLowerCase().indexOf(filter) !== -1){
             metroStation.setVisible(true);
-            self.filteredMapMarkers.push(metroStation)
+            self.filteredMapMarkers.push(metroStation);
          }  
       });
    });
-
 }
