@@ -79,6 +79,10 @@ Station Colors
 	flex-wrap: wrap;  
 }
 
+#address{
+	
+}
+
 .stationLine{
 	width: 30px;
 	text-align: center;

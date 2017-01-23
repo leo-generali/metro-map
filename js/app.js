@@ -17,6 +17,7 @@ function initializeMap() {
          'mapTypeControl': false
       };
 
+
       var map = new google.maps.Map(document.getElementById('map'), options);
 
       //Table that return the long form of 
@@ -30,6 +31,8 @@ function initializeMap() {
          null: 'null'
       };
 
+      //Overlays the metro rail lines
+      map.data.loadGeoJson('http://opendata.dc.gov/datasets/ead6291a71874bf8ba332d135036fbda_58.geojson');
 
       //Populates the metro map with every station
       function populateMap(num){

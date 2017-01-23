@@ -1,4 +1,4 @@
-//Gets metro station data from WMATA API
+// Gets metro station data from WMATA API
 
 // var trainData;
 
