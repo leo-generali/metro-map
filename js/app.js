@@ -66,6 +66,7 @@ function initializeMap() {
                   lines: [model.Stations[current].LineCode1, model.Stations[current].LineCode2, model.Stations[current].LineCode3, model.Stations[current].LineCode4],
                   title: model.Stations[current].Name,
                   stationCode: model.Stations[current].Code,
+                  address: model.Stations[current].Address['Street'] + ', ' + model.Stations[current].Address['City'] + ' ' + model.Stations[current].Address['State'],
                   openInfoWindow: false
                });
 
@@ -84,10 +85,12 @@ function initializeMap() {
                      this.openInfoWindow = false;
                   }
                };
+
+               console.log(marker.address);
                
                //Creates text with information on the Stations name and lines that go through it
                var contentString = 
-               '<p class="stationName">' + marker.title + '</p>' + '<div id="content">' + 
+               '<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<div id="content">' + 
                '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
                '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
                '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
