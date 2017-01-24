@@ -34,6 +34,22 @@ function initializeMap() {
       //Overlays the metro rail lines
       map.data.loadGeoJson('http://opendata.dc.gov/datasets/ead6291a71874bf8ba332d135036fbda_58.geojson');
 
+      map.data.setStyle(function(feature){
+         var lineColor = feature.getProperty('NAME');
+         if(lineColor === 'orange - rush +' || lineColor === 'yellow - rush +'){
+            return{
+               strokeWeight: 0
+            };
+         }
+         else{
+            return{
+               strokeColor: lineColor,
+               strokeOpacity: 0.5
+            };
+         }
+      });
+
+
       //Populates the metro map with every station
       function populateMap(num){
          for(var i = 0; i < num; i++){
