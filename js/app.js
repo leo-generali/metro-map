@@ -44,14 +44,17 @@ function initializeMap() {
          else{
             return{
                strokeColor: lineColor,
-               strokeOpacity: 0.5
+               strokeOpacity: 0.8
             };
          }
       });
 
+      //Creates a holder object variable for predictied rail info
 
       //Populates the metro map with every station
       function populateMap(num){
+
+
          for(var i = 0; i < num; i++){
             (function(current){
 
@@ -64,22 +67,6 @@ function initializeMap() {
                   title: model.Stations[current].Name,
                   stationCode: model.Stations[current].Code,
                   openInfoWindow: false
-               });
-
-               
-               var testStr = model.Stations[current].LineCode1;
-
-               //Creates text with information on the Stations name and lines that go through it
-               var contentString = 
-               '<p class="stationName">' + marker.title + '</p>' + '<div id="content">' + 
-               '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
-               '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
-               '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
-               '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] 
-
-               //Gives each station an infowindow that displays the information above
-               marker.infowindow = new google.maps.InfoWindow({
-                  content: contentString 
                });
 
                //If that marker's infoWindow is NOT open, it will open.
@@ -97,6 +84,19 @@ function initializeMap() {
                      this.openInfoWindow = false;
                   }
                };
+               
+               //Creates text with information on the Stations name and lines that go through it
+               var contentString = 
+               '<p class="stationName">' + marker.title + '</p>' + '<div id="content">' + 
+               '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
+               '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
+               '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
+               '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] 
+
+               //Gives each station an infowindow that displays the information above
+               marker.infowindow = new google.maps.InfoWindow({
+                  content: contentString 
+               });
 
                marker.addListener('click', marker.infoWindowClick);
 
