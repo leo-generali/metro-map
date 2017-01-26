@@ -50,6 +50,7 @@ function initializeMap() {
       });
 
       //Creates a holder object variable for predictied rail info
+      var realtimeTrainData = ["Farts"];
 
       //Populates the metro map with every station
       function populateMap(num){
@@ -86,20 +87,26 @@ function initializeMap() {
                   }
                };
 
-               console.log(marker.address);
+               marker.updateRailPredictions = function(){
+                  getRailInfo(this.stationCode);
+               };
                
                //Creates text with information on the Stations name and lines that go through it
-               var contentString = 
-               '<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<div id="content">' + 
-               '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
-               '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
-               '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
-               '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] 
+               marker.createInitialContentString = function(){
+                  var contentString = 
+                  '<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<div id="content">' + 
+                  '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
+                  '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
+                  '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
+                  '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] + '</p>'
+   
+                  this.infowindow = new google.maps.InfoWindow({
+                     content: contentString 
+                  });
+               }
 
                //Gives each station an infowindow that displays the information above
-               marker.infowindow = new google.maps.InfoWindow({
-                  content: contentString 
-               });
+               marker.createInitialContentString();
 
                marker.addListener('click', marker.infoWindowClick);
 
