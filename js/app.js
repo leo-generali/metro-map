@@ -3,6 +3,7 @@
 //Set up the Map
 var markers = [];
 var test = [];
+addIncidents();
 
 function initializeMap() {
 
@@ -34,6 +35,7 @@ function initializeMap() {
       //Overlays the metro rail lines
       map.data.loadGeoJson('http://opendata.dc.gov/datasets/ead6291a71874bf8ba332d135036fbda_58.geojson');
 
+      //Colors each netrorail per it's color
       map.data.setStyle(function(feature){
          var lineColor = feature.getProperty('NAME');
          if(lineColor === 'orange - rush +' || lineColor === 'yellow - rush +'){
@@ -47,10 +49,7 @@ function initializeMap() {
                strokeOpacity: 0.8
             };
          }
-      });
-
-      //Creates a holder object variable for predictied rail info
-      var realtimeTrainData = ["Farts"];
+      });  
 
       //Populates the metro map with every station
       function populateMap(num){
@@ -125,6 +124,11 @@ function initializeMap() {
 
 function mapViewModel(){
 
+   var checkMarkElem = document.getElementById('metroLineCheck');
+   checkMarkElem.addEventListener('click', function(){
+      map.data.setStyle({visible: false});    
+   });
+
    var self = this;
 
    self.filteredMapMarkers = ko.observableArray([]);
@@ -139,7 +143,6 @@ function mapViewModel(){
    //Since no stations have no characters in them, when the user input is blank, all stations are added to filterMapMarker
    //Once a character is typed, this function looks at all stations and finds out that character is located in it.
    //If that character is inside the function, it is added to filterMapMarker
-
    self.filterLocations = ko.computed(function(){
       var filter = self.userInput().toLowerCase();
 

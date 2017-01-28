@@ -52,6 +52,20 @@ h1, h2, h3, h4, h5, h6, body, html, p{
 	padding: 0;
 }
 
+#incidents{
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	height: 100px;
+}
+
+.incidentInfo{
+	list-style: none;
+	margin-bottom: 10px;
+}
+
+
+
 /*
 
 CSS Files Related to the markers
@@ -117,4 +131,13 @@ Station Colors
 	#markerList{
 		height: 200px;
 	}
+
+	#incidents{
+		height: auto;
+	}
+
+	.incidentInfo{
+		
+	}
+	
 }

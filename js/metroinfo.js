@@ -1,20 +1,28 @@
 //Gets predictive metro rail data from WMATA API
 
 
-function getRailInfo(stationCode){
-	var trainStationRequest = new XMLHttpRequest();
-	var trainData = {};
+function addIncidents(){
+	var xhr = new XMLHttpRequest();
+	var ulElem = document.getElementById('incidents');
 
-	trainStationRequest.onreadystatechange = function() {
-		if(trainStationRequest.readyState === 4){
-			trainData = JSON.parse(trainStationRequest.response);
-			trainData = trainData.Trains[0];
-			return trainData;
+	xhr.onreadystatechange = function() {
+		if(this.readyState === 4 && this.status === 200){
+			var railIncidents = JSON.parse(xhr.response);
+			railIncidents = railIncidents.Incidents
+
+			for(var x = 0; x < railIncidents.length; x++){
+				console.log(x);
+				var liElem = document.createElement('li');
+				liElem.className = 'incidentInfo'
+
+			  	liElem.appendChild(document.createTextNode(railIncidents[x].Description));
+			  	ulElem.appendChild(liElem);
+				
+			}
 		}else{
 			return "error";
 		}
 	}
-	trainStationRequest.open('GET', 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + stationCode + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf', true);
-	trainStationRequest.send('');
-	
+	xhr.open('GET', 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf', true);
+	xhr.send();
 }
