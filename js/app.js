@@ -35,6 +35,7 @@ function initializeMap() {
       //Overlays the metro rail lines
       map.data.loadGeoJson('http://opendata.dc.gov/datasets/ead6291a71874bf8ba332d135036fbda_58.geojson');
 
+
       //Colors each netrorail per it's color
       map.data.setStyle(function(feature){
          var lineColor = feature.getProperty('NAME');
@@ -93,7 +94,8 @@ function initializeMap() {
                //Creates text with information on the Stations name and lines that go through it
                marker.createInitialContentString = function(){
                   var contentString = 
-                  '<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<div id="content">' + 
+                  '<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + 
+                  '<h4 class="metroStationsServed">Metro Stations Served</h4>' + '<div id="content">' + 
                   '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
                   '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
                   '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
@@ -123,11 +125,6 @@ function initializeMap() {
 
 
 function mapViewModel(){
-
-   var checkMarkElem = document.getElementById('metroLineCheck');
-   checkMarkElem.addEventListener('click', function(){
-      map.data.setStyle({visible: false});    
-   });
 
    var self = this;
 

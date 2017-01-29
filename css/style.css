@@ -82,6 +82,10 @@ CSS Files Related to the markers
 	font-size: 1em;
 }
 
+.metroStationsServed{
+	padding-top: 5px;
+}
+
 /*
 
 Station Colors
@@ -134,10 +138,6 @@ Station Colors
 
 	#incidents{
 		height: auto;
-	}
-
-	.incidentInfo{
-		
 	}
 	
 }
