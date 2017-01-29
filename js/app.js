@@ -1,11 +1,35 @@
-
-
 //Set up the Map
 var markers = [];
 var test = [];
-addIncidents();
 
 function initializeMap() {
+
+      function addIncidents(){
+         var xhr = new XMLHttpRequest();
+         var ulElem = document.getElementById('incidents');
+
+         xhr.onreadystatechange = function() {
+            if(this.readyState === 4 && this.status === 200){
+               var railIncidents = JSON.parse(xhr.response);
+               railIncidents = railIncidents.Incidents
+
+               for(var x = 0; x < railIncidents.length; x++){
+                  var liElem = document.createElement('li');
+                  liElem.className = 'incidentInfo'
+
+                  liElem.appendChild(document.createTextNode(railIncidents[x].Description));
+                  ulElem.appendChild(liElem);
+                  
+               }
+            }else if(this.status === !200){
+               alert('There was an error retrieving the data from the WMATA api. Please refresh your browser and try again.')
+            }
+         }
+         xhr.open('GET', 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf', true);
+         xhr.send();
+      };
+
+      addIncidents();
 
       //Creates the map of the DMV
       var centerLat = 38.8951100;
