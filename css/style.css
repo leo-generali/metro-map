@@ -86,6 +86,11 @@ CSS Files Related to the markers
 	padding-top: 5px;
 }
 
+.apiInfo{
+	padding-top: 5px;
+	font-size: 0.6rem;	
+}
+
 /*
 
 Station Colors
@@ -97,9 +102,7 @@ Station Colors
 	flex-wrap: wrap;  
 }
 
-#address{
-	
-}
+
 
 .stationLine{
 	width: 30px;

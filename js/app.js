@@ -125,7 +125,8 @@ function initializeMap() {
                   '<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
                   '<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
                   '<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
-                  '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] + '</p>'
+                  '<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] + '</p>' + 
+                  '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>'
    
                   this.infowindow = new google.maps.InfoWindow({
                      content: contentString 
