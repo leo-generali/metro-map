@@ -79,6 +79,8 @@ function initializeMap() {
                      this.openInfoWindow = false;
                   });
                   if(!this.openInfoWindow){
+                     this.setAnimation(google.maps.Animation.BOUNCE)
+                     setTimeout(function(){marker.setAnimation(null)}, 750);
                      this.infowindow.open(this.map, this);
                      this.openInfoWindow = true;
                   }else{
