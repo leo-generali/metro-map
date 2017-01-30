@@ -63,6 +63,22 @@ function initializeMap() {
 		}
 	});
 
+	//Creates text with information on the Stations name and lines that go through it
+	createInitialContentString = function(tempMarker) {
+		var contentString =
+			'<p class="stationName">' + tempMarker.title + '</p>' + '<p class="stationAddress">' + tempMarker.address + '</p>' +
+			'<h4 class="metroStationsServed">Metro Stations Served</h4>' + '<div id="content">' +
+			'<p class="stationLine ' + tempMarker.lines[0] + '">' + tempMarker.lines[0] + '</p>' +
+			'<p class="stationLine ' + tempMarker.lines[1] + '">' + tempMarker.lines[1] + '</p>' +
+			'<p class="stationLine ' + tempMarker.lines[2] + '">' + tempMarker.lines[2] + '</p>' +
+			'<p class="stationLine ' + tempMarker.lines[3] + '">' + tempMarker.lines[3] + '</p>' +
+			'</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+
+		tempMarker.infowindow = new google.maps.InfoWindow({
+			content: contentString
+		});
+	};
+
 	//Populates the metro map with every station
 	function populateMap(num) {
 
@@ -81,6 +97,7 @@ function initializeMap() {
 					address: model.Stations[current].Address.Street + ', ' + model.Stations[current].Address.State + ' ' + model.Stations[current].Address.State,
 					openInfoWindow: false
 				});
+
 
 				//If that marker's infoWindow is NOT open, it will open.
 				//If the marker's infoWindow IS open, it will close.
@@ -102,28 +119,8 @@ function initializeMap() {
 					}
 				};
 
-				marker.updateRailPredictions = function() {
-					getRailInfo(this.stationCode);
-				};
-
-				//Creates text with information on the Stations name and lines that go through it
-				marker.createInitialContentString = function() {
-					var contentString =
-						'<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' +
-						'<h4 class="metroStationsServed">Metro Stations Served</h4>' + '<div id="content">' +
-						'<p class="stationLine ' + marker.lines[0] + '">' + marker.lines[0] + '</p>' +
-						'<p class="stationLine ' + marker.lines[1] + '">' + marker.lines[1] + '</p>' +
-						'<p class="stationLine ' + marker.lines[2] + '">' + marker.lines[2] + '</p>' +
-						'<p class="stationLine ' + marker.lines[3] + '">' + marker.lines[3] + '</p>' +
-						'</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
-
-					this.infowindow = new google.maps.InfoWindow({
-						content: contentString
-					});
-				};
-
 				//Gives each station an infowindow that displays the information above
-				marker.createInitialContentString();
+				createInitialContentString(marker);
 
 				marker.addListener('click', marker.infoWindowClick);
 
