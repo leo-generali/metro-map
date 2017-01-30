@@ -7,6 +7,8 @@ function initializeMap() {
 		var xhr = new XMLHttpRequest();
 		var ulElem = document.getElementById('incidents');
 
+		//Retrives incident information from WMATA API
+		//Need to add: An error message
 		xhr.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				var railIncidents = JSON.parse(xhr.response);
@@ -134,11 +136,11 @@ function initializeMap() {
 	populateMap(model.Stations.length);
 
 	//Applies KO bindings after markers is populated
-	ko.applyBindings(new mapViewModel());
+	ko.applyBindings(new mapviewModel());
 }
 
 
-function mapViewModel() {
+function mapviewModel() {
 
 	var self = this;
 
