@@ -1,6 +1,21 @@
 //Set up the Map
 var markers = [];
 
+var railInfo = {
+	rest: function(station){
+		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf'
+		fetch(url).then(function(response){
+			return response.json();
+		}).then(function(json){
+			railInfo.tempContent = json;
+		});
+	},
+
+	tempContent: {},
+
+	
+};
+
 function initializeMap() {
 
 	function addIncidents() {
@@ -108,6 +123,8 @@ function initializeMap() {
 					});
 					if (!this.openInfoWindow) {
 						this.setAnimation(google.maps.Animation.BOUNCE);
+						railInfo.rest(this.stationCode);
+						console.log(railInfo.tempContent);
 						setTimeout(function() {
 							marker.setAnimation(null);
 						}, 700);
