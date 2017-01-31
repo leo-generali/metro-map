@@ -11,7 +11,7 @@ var railInfo = {
 
 	//Initial call to the API
 	getPredictedRailData: function(station){
-		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf'
+		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf';
 		fetch(url).then(function(response){
 			return response.json();
 		}).then(function(json){
@@ -26,7 +26,7 @@ var railInfo = {
 
 		for(var i = 0; i < railLength; i++){
 			var curCar = railInfo.tempContent.Trains[i];
-			railInfo.predictedStringArr.push('<p class="markerDest">' + curCar.DestinationName + '</p><p class="markerTime">' + curCar.Min + '</p>' + '</p><p class="markerLine">' + curCar.Line + '</p>');
+			railInfo.predictedStringArr.push('<p class="markerDest">' + curCar.DestinationName + '</p><p class="markerTime">' + curCar.Min + '</p>' + '</p><p class="stationLine ' + curCar.Line + '">' + curCar.Line + '</p>');
 		}
 	},
 
@@ -37,7 +37,7 @@ var railInfo = {
 
 		for(var i = 0; i < railInfo.predictedStringArr.length; i++){
 			updatedContentString = updatedContentString + railInfo.predictedStringArr[i];
-		};
+		}
 
 		updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
 
@@ -52,6 +52,7 @@ var railInfo = {
 function initializeMap() {
 
 	function addIncidents() {
+
 		var xhr = new XMLHttpRequest();
 		var ulElem = document.getElementById('incidents');
 
@@ -223,4 +224,4 @@ function mapviewModel() {
 			}
 		});
 	});
-};
+}

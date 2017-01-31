@@ -74,15 +74,18 @@ CSS Files Related to the markers
 
 .markerDest{
 	width: 60%;
+	margin-bottom: 3px;
 }
 
 .markerTime{
 	width: 20%;
+	margin-bottom: 3px;
 }
 
 .markerLine{
-	width: 20%;
-	text-align: right;
+	width: 30px;
+	text-align: center;
+	margin-bottom: 3px;
 }
 
 .stationName{
@@ -112,17 +115,15 @@ Station Colors
 #content{
 	display: flex;
 	flex-wrap: wrap;
-
 	max-width: 250px;
 }
-
-
 
 .stationLine{
 	width: 30px;
 	text-align: center;
-	padding: 2px;
 	border-radius: 5px;
+	bottom-margin: 3px;
+	padding: 2px 0;
 }
 
 .RD	{background-color: red; color: white;}
