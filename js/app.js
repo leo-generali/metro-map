@@ -4,29 +4,49 @@ var markers = [];
 //Handles all of the predictive rail info.
 //
 var railInfo = {
+	//Holds the called rail info
+	tempContent: {},
+
+	predictedStringArr: [],
+
 	//Initial call to the API
-	rest: function(station){
+	getPredictedRailData: function(station){
 		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf'
 		fetch(url).then(function(response){
 			return response.json();
 		}).then(function(json){
 			railInfo.tempContent = json;
+			railInfo.createNewContentString();
 		});
 	},
 
-	//Holds the called rail info
-	tempContent: {},
 
-	returnContentString: function(){
+	createNewContentString: function(){
 		var railLength = railInfo.tempContent.Trains.length;
+
 		for(var i = 0; i < railLength; i++){
 			var curCar = railInfo.tempContent.Trains[i];
-			console.log(curCar.Destination);
-			console.log(curCar.Min);
+			railInfo.predictedStringArr.push('<p class="markerDest">' + curCar.DestinationName + '</p><p class="markerTime">' + curCar.Min + '</p>' + '</p><p class="markerLine">' + curCar.Line + '</p>');
 		}
 	},
 
-	predictedString: '';
+	updateInfoWindow: function(currentMarker){
+		var updatedContentString = 
+		'<p class="stationName">' + currentMarker.title + '</p>' + '<p class="stationAddress">' + currentMarker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
+		'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
+
+		for(var i = 0; i < railInfo.predictedStringArr.length; i++){
+			updatedContentString = updatedContentString + railInfo.predictedStringArr[i];
+		};
+
+		updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+
+		currentMarker.infowindow = new google.maps.InfoWindow({
+			content: updatedContentString
+		});
+
+		railInfo.predictedStringArr = [];
+	}
 };
 
 function initializeMap() {
@@ -97,12 +117,8 @@ function initializeMap() {
 			'<p class="stationName">' + tempMarker.title + '</p>' + '<p class="stationAddress">' + tempMarker.address + '</p>' +
 			'<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' + 
 			'<div id="content">' +
-			'<p class="markerDest">Destination</p><p class="markerTime">Time</p>' +
-			'<p class="stationLine ' + tempMarker.lines[0] + '">' + tempMarker.lines[0] + '</p>' +
-			'<p class="stationLine ' + tempMarker.lines[1] + '">' + tempMarker.lines[1] + '</p>' +
-			'<p class="stationLine ' + tempMarker.lines[2] + '">' + tempMarker.lines[2] + '</p>' +
-			'<p class="stationLine ' + tempMarker.lines[3] + '">' + tempMarker.lines[3] + '</p>' +
-			'</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+			'<p class="markerDest">Destination</p><p class="markerTime">Time</p><p class="markerLine">Line</p>' +
+			'</div>';
 
 		tempMarker.infowindow = new google.maps.InfoWindow({
 			content: contentString
@@ -129,30 +145,39 @@ function initializeMap() {
 				});
 
 
+
 				//If that marker's infoWindow is NOT open, it will open.
-				//If the marker's infoWindow IS open, it will close.
+				//If the marker's infoWindow IS open, it will close
 				marker.infoWindowClick = function() {
-					markers.forEach(function(markerElem) {
-						markerElem.infowindow.close();
-						this.openInfoWindow = false;
-					});
-					if (!this.openInfoWindow) {
-						this.setAnimation(google.maps.Animation.BOUNCE);
-						railInfo.rest(this.stationCode);
-						console.log(railInfo.tempContent);
-						setTimeout(function() {
-							marker.setAnimation(null);
-						}, 700);
-						this.infowindow.open(this.map, this);
-						this.openInfoWindow = true;
-					} else {
-						this.infowindow.close();
-						this.openInfoWindow = false;
-					}
+					railInfo.getPredictedRailData(this.stationCode);
+					this.infowindow = 'null';
+					railInfo.updateInfoWindow(this);
+					this.infowindow.open(this.map, this);
+
+					// markers.forEach(function(markerElem) {
+					// 	markerElem.infowindow.close();
+					// 	this.openInfoWindow = false;
+					// });
+
+					// if (!this.openInfoWindow) {
+					// 	// this.setAnimation(google.maps.Animation.BOUNCE);
+					// 	// setTimeout(function() {
+					// 	// 	marker.setAnimation(null);
+					// 	// }, 700);
+
+					// 	railInfo.updateInfoWindow(this);
+
+
+					// 	this.infowindow.open(this.map, this);
+					// 	this.openInfoWindow = true;
+					// } else {
+					// 	this.infowindow.close();
+					// 	this.openInfoWindow = false;
+					// }
 				};
 
 				//Gives each station an infowindow that displays the information above
-				createInitialContentString(marker);
+				// createInitialContentString(marker);
 
 				marker.addListener('click', marker.infoWindowClick);
 
