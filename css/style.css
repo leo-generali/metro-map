@@ -72,6 +72,9 @@ CSS Files Related to the markers
 
 */
 
+.markerDest{
+	width: 50%;
+}
 
 .stationName{
 	font-weight: bold;
@@ -105,11 +108,10 @@ Station Colors
 
 
 .stationLine{
-	width: 30px;
+	width: 100%;
 	text-align: center;
 	padding: 2px;
 	border-radius: 5px;
-	margin-right: 2px;
 }
 
 .RD	{background-color: red; color: white;}

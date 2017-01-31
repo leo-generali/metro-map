@@ -1,7 +1,10 @@
 //Set up the Map
 var markers = [];
 
+//Handles all of the predictive rail info.
+//
 var railInfo = {
+	//Initial call to the API
 	rest: function(station){
 		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf'
 		fetch(url).then(function(response){
@@ -11,9 +14,19 @@ var railInfo = {
 		});
 	},
 
+	//Holds the called rail info
 	tempContent: {},
 
-	
+	returnContentString: function(){
+		var railLength = railInfo.tempContent.Trains.length;
+		for(var i = 0; i < railLength; i++){
+			var curCar = railInfo.tempContent.Trains[i];
+			console.log(curCar.Destination);
+			console.log(curCar.Min);
+		}
+	},
+
+	predictedString: '';
 };
 
 function initializeMap() {
@@ -82,7 +95,9 @@ function initializeMap() {
 	createInitialContentString = function(tempMarker) {
 		var contentString =
 			'<p class="stationName">' + tempMarker.title + '</p>' + '<p class="stationAddress">' + tempMarker.address + '</p>' +
-			'<h4 class="metroStationsServed">Metro Stations Served</h4>' + '<div id="content">' +
+			'<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' + 
+			'<div id="content">' +
+			'<p class="markerDest">Destination</p><p class="markerTime">Time</p>' +
 			'<p class="stationLine ' + tempMarker.lines[0] + '">' + tempMarker.lines[0] + '</p>' +
 			'<p class="stationLine ' + tempMarker.lines[1] + '">' + tempMarker.lines[1] + '</p>' +
 			'<p class="stationLine ' + tempMarker.lines[2] + '">' + tempMarker.lines[2] + '</p>' +
@@ -109,7 +124,7 @@ function initializeMap() {
 					lines: [model.Stations[current].LineCode1, model.Stations[current].LineCode2, model.Stations[current].LineCode3, model.Stations[current].LineCode4],
 					title: model.Stations[current].Name,
 					stationCode: model.Stations[current].Code,
-					address: model.Stations[current].Address.Street + ', ' + model.Stations[current].Address.State + ' ' + model.Stations[current].Address.State,
+					address: model.Stations[current].Address.Street + ', ' + model.Stations[current].Address.City + ' ' + model.Stations[current].Address.State,
 					openInfoWindow: false
 				});
 
