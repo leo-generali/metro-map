@@ -5,7 +5,7 @@ var markers = [];
 
 mapError = function(){
 	alert('There was a problem accessing the Google Maps API. Please refresh your browser to try again.');
-}
+};
 
 var railInfo = {
 	//Holds the called rail info
@@ -226,7 +226,7 @@ function mapviewModel() {
 			}else{
 				railIncidents.forEach(function(incident){
 					self.incidents.push(incident);
-				})
+				});
 			}
 		}).catch(function(error) {
         	alert('There was a problem accessing the WMATA API. Please refresh your browser to try again.');
