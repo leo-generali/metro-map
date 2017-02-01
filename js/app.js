@@ -18,7 +18,9 @@ var railInfo = {
 			railInfo.tempContent = json;
 			railInfo.createNewContentString();
 			callback();
-		});
+		}).catch(function(error) {
+        	alert('There was a problem accessing the WMATA API. Please refresh your browser to try again.');
+    	});
 	},
 
 	//Creates an array of strings using the predicted rail info
@@ -207,7 +209,8 @@ function mapviewModel() {
 	//Incidents typically involve track work that will cause delays
 	self.addIncidents = ko.computed(function() {
 		var url = 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf'; 
-		fetch(url).then(function(response){
+		fetch(url)
+		.then(function(response){
 			return response.json();
 		}).then(function(json){
 			var railIncidents = json.Incidents;
@@ -221,7 +224,9 @@ function mapviewModel() {
 					self.incidents.push(incident);
 				})
 			}
-		});
+		}).catch(function(error) {
+        	alert('There was a problem accessing the WMATA API. Please refresh your browser to try again.');
+    	});
 	});
 
 	self.addIncidents();
