@@ -3,6 +3,10 @@ var markers = [];
 
 //Handles all of the predictive rail info.
 
+mapError = function(){
+	alert('There was a problem accessing the Google Maps API. Please refresh your browser to try again.');
+}
+
 var railInfo = {
 	//Holds the called rail info
 	tempContent: {},
@@ -29,7 +33,7 @@ var railInfo = {
 
 		for(var i = 0; i < railLength; i++){
 			var curCar = railInfo.tempContent.Trains[i];
-			railInfo.predictedStringArr.push('<p class="markerDest">' + curCar.DestinationName + '</p><p class="markerTime">' + curCar.Min + '</p>' + '</p><p class="stationLine ' + curCar.Line + '">' + curCar.Line + '</p>');
+			railInfo.predictedStringArr.push('<p class="markerdest">' + curCar.DestinationName + '</p><p class="markertime">' + curCar.Min + '</p>' + '</p><p class="stationline ' + curCar.Line + '">' + curCar.Line + '</p>');
 		}
 	},
 
@@ -37,7 +41,7 @@ var railInfo = {
 	createNewInfoWindow: function(currentMarker){
 		var updatedContentString = 
 		'<p class="stationName">' + currentMarker.title + '</p>' + '<p class="stationAddress">' + currentMarker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
-		'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
+		'<div id="content">' + '<p class="markerdest">Destination</p><p class="markertime">Arrival</p><p class="markerline">Line</p>';
 
 		//Appends status of each train to the newly created content string
 		for(var i = 0; i < railInfo.predictedStringArr.length; i++){
@@ -45,7 +49,7 @@ var railInfo = {
 		}
 
 		//Appends credit to string
-		updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+		updatedContentString = updatedContentString + '</div>' + '<p class="apiinfo">Data provided by WMATA API</p>';
 
 		currentMarker.infowindow = new google.maps.InfoWindow({
 			content: updatedContentString
@@ -96,10 +100,10 @@ function initializeMap() {
 	//Creates text with information on the Stations name and lines that go through it
 	createInitialContentString = function(tempMarker) {
 		var contentString =
-			'<p class="stationName">' + tempMarker.title + '</p>' + '<p class="stationAddress">' + tempMarker.address + '</p>' +
-			'<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' + 
+			'<p class="stationname">' + tempMarker.title + '</p>' + '<p class="stationaddress">' + tempMarker.address + '</p>' +
+			'<h4 class="metrostationsserved">Estimated Metro Arrivals</h4>' + 
 			'<div id="content">' +
-			'<p class="markerDest">Destination</p><p class="markerTime">Time</p><p class="markerLine">Line</p>' +
+			'<p class="markerdest">Destination</p><p class="markertime">Time</p><p class="markerline">Line</p>' +
 			'</div>';
 
 		tempMarker.infowindow = new google.maps.InfoWindow({
@@ -135,14 +139,14 @@ function initializeMap() {
 					}, 700);
 					railInfo.getPredictedRailData(this.stationCode, function(){
 						var updatedContentString = 
-						'<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
-						'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
+						'<p class="stationname">' + marker.title + '</p>' + '<p class="stationaddress">' + marker.address + '</p>' + '<h4 class="metrostationsserved">Estimated Metro Arrivals</h4>' +
+						'<div id="content">' + '<p class="markerdest">Destination</p><p class="markertime">Arrival</p><p class="markerline">Line</p>';
 
 						for(var i = 0; i < railInfo.predictedStringArr.length; i++){
 							updatedContentString = updatedContentString + railInfo.predictedStringArr[i];
 						}
 
-						updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+						updatedContentString = updatedContentString + '</div>' + '<p class="apiinfo">Data provided by WMATA API</p>';
 
 						marker.infowindow = new google.maps.InfoWindow({
 							content: updatedContentString
@@ -217,7 +221,7 @@ function mapviewModel() {
 			var ulElem = document.getElementById('incidents');
 			//If there are no incidents
 			if(railIncidents.length === 0 ){
-				document.getElementById('incidentHeader').style.display = 'none';
+				document.getElementById('incidentheader').style.display = 'none';
 				ulElem.style.display = 'none';
 			}else{
 				railIncidents.forEach(function(incident){

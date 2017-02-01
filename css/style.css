@@ -1,4 +1,4 @@
-#map{
+#map {
 	height: 100%;
 }
 
@@ -8,23 +8,23 @@ CSS Files Related to the Search Bar in the Upper Left
 
 */
 
-#mapMenu{
+#mapmenu {
 	position: absolute;
   	top: 0px;
  	width: 100%;
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
-#mapTitle{
+#maptitle {
 	text-align: center;
 }
 
-#metroInput{
+#metroinput {
 	width: 99%;
 	font-size: 16px;
 }
 
-#markerList{
+#markerlist {
 	height: 100px;
 	padding-left: 0px;
 	margin: 3px;
@@ -34,31 +34,31 @@ CSS Files Related to the Search Bar in the Upper Left
 	list-style-type: none;
 }
 
-.metroName{
+.metroname {
 	padding: 2px 0;
 	width: 100%;
 }
 
-.metroName:hover{
+.metroname:hover {
 	cursor: pointer; 
 	cursor: hand;
 	background-color: lightgreen;
 }
 
-h1, h2, h3, h4, h5, h6, body, html, p{
+h1, h2, h3, h4, h5, h6, body, html, p {
 	font-family: Arial, sans-serif;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 }
 
-#incidents{
+#incidents {
 	padding: 0;
 	margin: 0;
 	overflow: auto;
 }
 
-.incidentInfo{
+.incidentinfo {
 	list-style: none;
 	margin-top: 10px;
 }
@@ -71,36 +71,36 @@ CSS Files Related to the markers
 
 */
 
-.markerDest{
+.markerdest {
 	width: 60%;
 	margin-bottom: 3px;
 }
 
-.markerTime{
+.markertime {
 	width: 20%;
 	margin-bottom: 3px;
 }
 
-.markerLine{
+.markerline {
 	width: 30px;
 	text-align: center;
 	margin-bottom: 3px;
 }
 
-.stationName{
+.stationname {
 	font-weight: bold;
 	margin-bottom: 2px;
 }
 
-.stationLine{
+.stationline {
 	font-size: 1em;
 }
 
-.metroStationsServed{
+.metrostationsserved {
 	padding-top: 5px;
 }
 
-.apiInfo{
+.apiinfo {
 	padding-top: 5px;
 	font-size: 0.6rem;	
 }
@@ -111,13 +111,13 @@ Station Colors
 
 */
 
-#content{
+#content {
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 250px;
 }
 
-.stationLine{
+.stationline {
 	width: 30px;
 	text-align: center;
 	border-radius: 5px;
@@ -140,7 +140,7 @@ Station Colors
 */
 
 @media (min-width: 600px) {
-	#mapMenu {
+	#mapmenu {
 		top: 5px;
 		left: 5px;
 
@@ -148,12 +148,7 @@ Station Colors
 		padding: 10px;
 	}
 
-	#markerList{
+	#markerlist {
 		height: 200px;
 	}
-
-	#incidents{
-
-	}
-	
 }

@@ -17,22 +17,22 @@
 <body>
 
 	<main id="map"></main>
-	<div id="mapMenu">
-		<h1 id="mapTitle">Metro Memo</h1>	
-		<input id="metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput">
-		<ul id="markerList" data-bind="foreach: filteredMapMarkers">
-			<li class="metroName" data-bind="click: $root.listClick"><span data-bind="text: title"></span></li>
+	<aside id="mapmenu">
+		<h1 id="maptitle">Metro Memo</h1>	
+		<input id="metroinput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput">
+		<ul id="markerlist" data-bind="foreach: filteredMapMarkers">
+			<li class="metroname" data-bind="click: $root.listClick"><span data-bind="text: title"></span></li>
 		</ul>
-		<h3 id='incidentHeader'>Incidents:</h3>
+		<h3 id="incidentheader">Incidents:</h3>
 			<ul id="incidents" data-bind="foreach: incidents">
-				<li class="incidentInfo" data-bind="text: Description"></li>
+				<li class="incidentinfo" data-bind="text: Description"></li>
 			</ul>
-	</div>
+	</aside>
 
-	<script type="text/javascript" src="js/metroData.js"></script>
-	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+	<script src="js/metroData.js"></script>
+	<script src="js/knockout-3.4.1.js"></script>
+	<script src="js/app.js"></script>
 
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCd6fBeSuBeC-MIMDMjtV-bt5AMVxojMQ&v=3&callback=initializeMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCd6fBeSuBeC-MIMDMjtV-bt5AMVxojMQ&v=3&callback=initializeMap" onerror="mapError()"></script>
 </body>
 </html>
