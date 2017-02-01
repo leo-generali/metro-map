@@ -2,7 +2,7 @@
 var markers = [];
 
 //Handles all of the predictive rail info.
-//
+
 var railInfo = {
 	//Holds the called rail info
 	tempContent: {},
@@ -10,17 +10,18 @@ var railInfo = {
 	predictedStringArr: [],
 
 	//Initial call to the API
-	getPredictedRailData: function(station){
+	getPredictedRailData: function(station, callback){
 		var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + station + '?api_key=1371dab10bc845bea40ef0d8f9aae1cf';
 		fetch(url).then(function(response){
 			return response.json();
 		}).then(function(json){
 			railInfo.tempContent = json;
 			railInfo.createNewContentString();
+			callback();
 		});
 	},
 
-
+	//Creates an array of strings using the predicted rail info
 	createNewContentString: function(){
 		var railLength = railInfo.tempContent.Trains.length;
 
@@ -30,7 +31,8 @@ var railInfo = {
 		}
 	},
 
-	updateInfoWindow: function(currentMarker){
+	//Creates an infowindow using the string array 
+	createNewInfoWindow: function(currentMarker){
 		var updatedContentString = 
 		'<p class="stationName">' + currentMarker.title + '</p>' + '<p class="stationAddress">' + currentMarker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
 		'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
@@ -150,14 +152,31 @@ function initializeMap() {
 				//If that marker's infoWindow is NOT open, it will open.
 				//If the marker's infoWindow IS open, it will close
 				marker.infoWindowClick = function() {
-					railInfo.getPredictedRailData(this.stationCode);
-					this.infowindow = 'null';
-					railInfo.updateInfoWindow(this);
-					this.infowindow.open(this.map, this);
+					this.openInfoWindow = true;
+					railInfo.getPredictedRailData(this.stationCode, function(){
+						var updatedContentString = 
+						'<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
+						'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
+
+						for(var i = 0; i < railInfo.predictedStringArr.length; i++){
+							updatedContentString = updatedContentString + railInfo.predictedStringArr[i];
+						}
+
+						updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
+
+						marker.infowindow = new google.maps.InfoWindow({
+							content: updatedContentString
+						});
+
+						marker.infowindow.open(marker.map, marker);
+
+						railInfo.predictedStringArr = [];
+					});
 
 					// markers.forEach(function(markerElem) {
-					// 	markerElem.infowindow.close();
-					// 	this.openInfoWindow = false;
+					// 	if(markerElem.openInfoWindow){
+
+					// 	}
 					// });
 
 					// if (!this.openInfoWindow) {
@@ -178,7 +197,7 @@ function initializeMap() {
 				};
 
 				//Gives each station an infowindow that displays the information above
-				// createInitialContentString(marker);
+				createInitialContentString(marker);
 
 				marker.addListener('click', marker.infoWindowClick);
 

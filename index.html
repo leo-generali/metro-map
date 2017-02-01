@@ -18,7 +18,7 @@
 
 	<main id="map"></main>
 	<div id="mapMenu">
-		<h1 id="mapTitle">DMV Metro Map</h1>	
+		<h1 id="mapTitle">Metro Memo</h1>	
 		<input id="metroInput" placeholder="Search for your favorite Metro station!" data-bind="textInput: userInput">
 		<ul id="markerList" data-bind="foreach: filteredMapMarkers">
 			<li class="metroName" data-bind="click: $root.listClick"><span data-bind="text: title"></span></li>
@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/metroData.js"></script>
 	<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/test.js"></script>
 
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCd6fBeSuBeC-MIMDMjtV-bt5AMVxojMQ&v=3&callback=initializeMap"></script>
 </body>
