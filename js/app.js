@@ -53,31 +53,25 @@ var railInfo = {
 
 function initializeMap() {
 
+	//Adds any incidents from WMATA API to the map overlay
+	//Incidents typically involve track work that will cause delays
 	function addIncidents() {
+		var url = 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf'; 
+		fetch(url).then(function(response){
+			return response.json();
+		}).then(function(json){
+			var railIncidents = json.Incidents;
+			var ulElem = document.getElementById('incidents');
 
-		var xhr = new XMLHttpRequest();
-		var ulElem = document.getElementById('incidents');
+			for (var x = 0; x < railIncidents.length; x++) {
+				var liElem = document.createElement('li');
+				liElem.className = 'incidentInfo';
 
-		//Retrives incident information from WMATA API
-		//Need to add: An error message
-		xhr.onreadystatechange = function() {
-			if (this.readyState === 4 && this.status === 200) {
-				var railIncidents = JSON.parse(xhr.response);
-				railIncidents = railIncidents.Incidents;
-
-				for (var x = 0; x < railIncidents.length; x++) {
-					var liElem = document.createElement('li');
-					liElem.className = 'incidentInfo';
-
-					liElem.appendChild(document.createTextNode(railIncidents[x].Description));
-					ulElem.appendChild(liElem);
-
-				}
+				liElem.appendChild(document.createTextNode(railIncidents[x].Description));
+				ulElem.appendChild(liElem);
 			}
-		};
-		xhr.open('GET', 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf', true);
-		xhr.send();
-	}
+		});
+	};
 
 	addIncidents();
 
