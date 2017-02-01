@@ -37,43 +37,26 @@ var railInfo = {
 		'<p class="stationName">' + currentMarker.title + '</p>' + '<p class="stationAddress">' + currentMarker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
 		'<div id="content">' + '<p class="markerDest">Destination</p><p class="markerTime">Arrival</p><p class="markerLine">Line</p>';
 
+		//Appends status of each train to the newly created content string
 		for(var i = 0; i < railInfo.predictedStringArr.length; i++){
 			updatedContentString = updatedContentString + railInfo.predictedStringArr[i];
 		}
 
+		//Appends credit to string
 		updatedContentString = updatedContentString + '</div>' + '<p class="apiInfo">Data provided by WMATA API</p>';
 
 		currentMarker.infowindow = new google.maps.InfoWindow({
 			content: updatedContentString
 		});
 
+		//Resets the predictedStringArr
 		railInfo.predictedStringArr = [];
-	}
+	},
+
+
 };
 
 function initializeMap() {
-
-	//Adds any incidents from WMATA API to the map overlay
-	//Incidents typically involve track work that will cause delays
-	function addIncidents() {
-		var url = 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf'; 
-		fetch(url).then(function(response){
-			return response.json();
-		}).then(function(json){
-			var railIncidents = json.Incidents;
-			var ulElem = document.getElementById('incidents');
-
-			for (var x = 0; x < railIncidents.length; x++) {
-				var liElem = document.createElement('li');
-				liElem.className = 'incidentInfo';
-
-				liElem.appendChild(document.createTextNode(railIncidents[x].Description));
-				ulElem.appendChild(liElem);
-			}
-		});
-	};
-
-	addIncidents();
 
 	//Creates the map of the DMV
 	var centerLat = 38.8951100;
@@ -138,15 +121,16 @@ function initializeMap() {
 					title: model.Stations[current].Name,
 					stationCode: model.Stations[current].Code,
 					address: model.Stations[current].Address.Street + ', ' + model.Stations[current].Address.City + ' ' + model.Stations[current].Address.State,
-					openInfoWindow: false
 				});
-
-
 
 				//If that marker's infoWindow is NOT open, it will open.
 				//If the marker's infoWindow IS open, it will close
 				marker.infoWindowClick = function() {
 					this.openInfoWindow = true;
+					this.setAnimation(google.maps.Animation.BOUNCE);
+					setTimeout(function() {
+						marker.setAnimation(null);
+					}, 700);
 					railInfo.getPredictedRailData(this.stationCode, function(){
 						var updatedContentString = 
 						'<p class="stationName">' + marker.title + '</p>' + '<p class="stationAddress">' + marker.address + '</p>' + '<h4 class="metroStationsServed">Estimated Metro Arrivals</h4>' +
@@ -166,28 +150,6 @@ function initializeMap() {
 
 						railInfo.predictedStringArr = [];
 					});
-
-					// markers.forEach(function(markerElem) {
-					// 	if(markerElem.openInfoWindow){
-
-					// 	}
-					// });
-
-					// if (!this.openInfoWindow) {
-					// 	// this.setAnimation(google.maps.Animation.BOUNCE);
-					// 	// setTimeout(function() {
-					// 	// 	marker.setAnimation(null);
-					// 	// }, 700);
-
-					// 	railInfo.updateInfoWindow(this);
-
-
-					// 	this.infowindow.open(this.map, this);
-					// 	this.openInfoWindow = true;
-					// } else {
-					// 	this.infowindow.close();
-					// 	this.openInfoWindow = false;
-					// }
 				};
 
 				//Gives each station an infowindow that displays the information above
@@ -237,4 +199,30 @@ function mapviewModel() {
 			}
 		});
 	});
+
+
+	self.incidents = ko.observableArray([]);
+
+	//Adds any incidents from WMATA API to the map overlay
+	//Incidents typically involve track work that will cause delays
+	self.addIncidents = ko.computed(function() {
+		var url = 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=1371dab10bc845bea40ef0d8f9aae1cf'; 
+		fetch(url).then(function(response){
+			return response.json();
+		}).then(function(json){
+			var railIncidents = json.Incidents;
+			var ulElem = document.getElementById('incidents');
+			//If there are no incidents
+			if(railIncidents.length === 0 ){
+				document.getElementById('incidentHeader').style.display = 'none';
+				ulElem.style.display = 'none';
+			}else{
+				railIncidents.forEach(function(incident){
+					self.incidents.push(incident);
+				})
+			}
+		});
+	});
+
+	self.addIncidents();
 }

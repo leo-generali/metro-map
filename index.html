@@ -23,8 +23,10 @@
 		<ul id="markerList" data-bind="foreach: filteredMapMarkers">
 			<li class="metroName" data-bind="click: $root.listClick"><span data-bind="text: title"></span></li>
 		</ul>
-		<h3>Incidents:</h3>
-			<ul id="incidents"></ul>
+		<h3 id='incidentHeader'>Incidents:</h3>
+			<ul id="incidents" data-bind="foreach: incidents">
+				<li class="incidentInfo" data-bind="text: Description"></li>
+			</ul>
 	</div>
 
 	<script type="text/javascript" src="js/metroData.js"></script>
